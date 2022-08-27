@@ -10,15 +10,21 @@ import Foundation
 class MediaListViewControllerViewModel {
     
     var mediaArray: [TrendingMediaResults] = []
-   
-    //MARK: - LoadingMediaData
     
-    func loadMediaData(_ type: String = Constants.Network.movieType, completion: @escaping(()->())) {
+    //MARK: - LoadingMediaData
+
+    func loadMediaData(_ type: String = Constants.Network.movieType, _ page: Int = 1, completion: @escaping(()->())) {
         
-        let url = NetworkManager().configureTrendingMediaURL(mediaType: Constants.Network.movieType)
+        let url = NetworkManager().configureTrendingMediaURL(mediaType: type, page: page)
         
         NetworkManager().parceMediaData(url: url) { (responceData: TrendingMediaModel) in
-            self.mediaArray = responceData.results ?? []
+            
+            let mediaList = responceData.results ?? []
+
+            for media in mediaList {
+                self.mediaArray.append(media)
+            }
+
             completion()
         }
     }

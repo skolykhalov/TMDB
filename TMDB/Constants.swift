@@ -24,6 +24,7 @@ struct Constants {
 
         static let baseImageURL = "https://image.tmdb.org/t/p/w500"
         static var movieType = "movie"
+        static var page = 1
 
     }
     

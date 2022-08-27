@@ -14,6 +14,8 @@ extension MediaListViewController: UISearchBarDelegate {
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         
+        self.tableView.setContentOffset(.zero, animated: true)
+        
         if searchBar.text?.count == 0 {
             
             mediaListViewModel.loadMediaData(Constants.Network.movieType) {
@@ -44,6 +46,10 @@ extension MediaListViewController: UISearchBarDelegate {
     //MARK: - CancelButtonAction
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        
+        self.tableView.setContentOffset(.zero, animated: true)
+        mediaListViewModel.mediaArray.removeAll()
+        
         mediaListViewModel.loadMediaData(Constants.Network.movieType) {
             self.tableView.reloadData()
         }
@@ -57,6 +63,8 @@ extension MediaListViewController: UISearchBarDelegate {
         let scopeURL = NetworkManager().changingScopeURL(scope: searchBar.scopeButtonTitles?[selectedScope] ?? "Movie")
         
         NetworkManager().parceMediaData(url: scopeURL) { (responceData: TrendingMediaModel) in
+
+            self.tableView.setContentOffset(.zero, animated: true)
             self.mediaListViewModel.mediaArray = responceData.results ?? []
             self.tableView.reloadData()
         }

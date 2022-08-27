@@ -107,4 +107,17 @@ extension MediaListViewController: UITableViewDelegate {
         }
 
     }
+    
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        
+        if indexPath.row == mediaListViewModel.mediaArray.count - 1 {
+            
+            Constants.Network.page += 1
+            
+            mediaListViewModel.loadMediaData(Constants.Network.movieType, Constants.Network.page) {
+                self.tableView.reloadData()
+            }
+            
+        }
+    }
 }

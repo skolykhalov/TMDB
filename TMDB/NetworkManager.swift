@@ -26,8 +26,8 @@ struct NetworkManager {
         }
     }
     
-    func configureTrendingMediaURL(mediaType: String) -> String {
-        let trendingMediaURL = "https://api.themoviedb.org/3/trending/\(mediaType)/week?api_key=fe835e5474ffc286d604ef0a61323f59"
+    func configureTrendingMediaURL(mediaType: String, page: Int) -> String {
+        let trendingMediaURL = "https://api.themoviedb.org/3/trending/\(mediaType)/week?api_key=fe835e5474ffc286d604ef0a61323f59&page=\(page)"
         
         return trendingMediaURL
     }
@@ -59,7 +59,7 @@ struct NetworkManager {
             Constants.Network.movieType = "tv"
         }
 
-        let scopeURL = NetworkManager().configureTrendingMediaURL(mediaType: Constants.Network.movieType)
+        let scopeURL = NetworkManager().configureTrendingMediaURL(mediaType: Constants.Network.movieType, page: 1)
         
         return scopeURL
     }
